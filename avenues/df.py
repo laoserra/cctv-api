@@ -1,5 +1,6 @@
 # import libraries
 import pandas as pd
+from flask import current_app
 
 def clean_report(dataframe):
     # creating timestamp field
@@ -22,3 +23,10 @@ def clean_report(dataframe):
             'bicycle','motorcycle','bus','truck']]
 
     return dataframe
+
+
+def get_df():
+    df = pd.read_csv(current_app.config['CSVFILE'])
+    df = clean_report(df)
+
+    return df

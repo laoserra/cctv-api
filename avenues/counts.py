@@ -1,33 +1,34 @@
 # import libraries
 import pandas as pd
 import json
-from flask import Flask
-import cctv_prep as prep
+from flask import (
+    Blueprint, render_template, url_for
+)
+from avenues.df import get_df
 
-# create a Flask app
-app = Flask(__name__)
-
-df = pd.read_csv('./report.csv')
-df = prep.clean_report(df)
+bp = Blueprint('counts', __name__)
 
 # ------- Flask routes to serve HTTP traffic -------------
 
 #endpoint to the initial page of the api
-@app.route('/')
-def hello_world():
-    return 'work on progress... :)'
+@bp.route('/')
+def index():
+    df = get_df()
+    locations = df.location.unique()
+    return render_template('index.html', locations=locations)
 
 # endpoint to get all data
-@app.route('/counts/')
+@bp.route('/counts/')
 def get_all_data():
-    all_data = df.head().to_dict('index')# delete head
+    all_data = get_df().head().to_dict('index')# delete head
     
     #default=str since timestp not serializable
     return json.dumps(all_data, default=str) 
 
 # endpoint to get all counts per location
-@app.route('/counts/<location>')
+@bp.route('/counts/<location>')
 def get_data_by_location(location):
+    df = get_df()
     if location not in df['location'].unique():
         return 'Error: location does not exist'
     data_by_location = df[df['location']==location]
@@ -36,8 +37,9 @@ def get_data_by_location(location):
     return json.dumps(data_by_location, default=str) 
 
 # endpoint to get all counts per time interval
-@app.route('/counts/<first_date>/<last_date>')
+@bp.route('/counts/<first_date>/<last_date>')
 def get_all_data_by_time_interval(first_date, last_date):
+    df = get_df()
     fst_date = pd.to_datetime(first_date)
     lst_date = pd.to_datetime(last_date)
     if fst_date > lst_date:
@@ -52,8 +54,9 @@ def get_all_data_by_time_interval(first_date, last_date):
     return json.dumps(all_data_filtered, default=str) 
 
 # endpoint to get counts per location and time interval
-@app.route('/counts/<location>/<first_date>/<last_date>')
+@bp.route('/counts/<location>/<first_date>/<last_date>')
 def get_data_by_location_time_interval(location, first_date, last_date):
+    df = get_df()
     if location not in df['location'].unique():
         return 'Error: location does not exist'
     data_by_location = df[df['location']==location]
@@ -71,7 +74,3 @@ def get_data_by_location_time_interval(location, first_date, last_date):
     data_by_location_filtered = data_by_location_filtered.to_dict('index')
     
     return json.dumps(data_by_location_filtered, default=str) 
-
-# run the app with the debug mode as True
-if __name__ == '__main__':
-    app.run(debug=True)

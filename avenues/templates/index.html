@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<title>Avenues</title>
+<body>
+<h1>UBDC - Avenues project api</h1>
+<p>in partnership with Glasgow City Council and Glasgow Centre for Population Health</p>
+<br>
+<h2> Find what video analytics outputs are available </h2>
+<br>
+<h3>Get all counts for all dates and all cameras</h3>
+<ul style="line-height:100%">
+	<li><a href="{{ url_for('counts.get_all_data') }}">/counts</a>
+	<li>response example:<code>{"0": {"timestp_UTC": "2019-11-30 04:30:01.428000", "location": "Argyle_St_@_Oswald_St(static)", "car": 2, "person": 0, "bicycle": 0, "motorcycle": 0, "bus": 0, "truck": 0}, "1": {"timestp_UTC": "2019-11-30 04:30:01.431000", "location": "Sauchiehall_St_@_Pitt_St", "car": 5, "person": 0, "bicycle": 0, "motorcycle": 0, "bus": 0, "truck": 0}}</code>
+</ul>
+<br>
+<h3>Get all counts for a location</h3>
+<p>url syntax: <code>/counts/location</code></p>
+
+<div> Locations available:
+<code>
+{% for location in locations %}
+<div>{{ location }}</div>
+{% endfor %}
+</code>
+</div>
+<br>
+<h3>Get all counts for a time period (inclusive)</h3>
+<p>url syntax: <code>/counts/first_date/last_date</code></p>
+<p>First date available: <code>2019-11-30</code>
+<br>
+<h3>Get counts for a location and time period (inclusive)</h3>
+<p>url syntax: <code>/counts/location/first_date/last_date</code></p>
+</body>
+</html>
+
