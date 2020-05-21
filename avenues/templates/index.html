@@ -16,9 +16,9 @@
 <h3>Get all counts for a location</h3>
 <p>url syntax: <code>/counts/location</code></p>
 
-<div> Locations available:
+<div> Locations and time periods available:
 <code>
-{% for location in locations %}
+{% for location in locations%}
 <div>{{ location }}</div>
 {% endfor %}
 </code>
@@ -26,7 +26,6 @@
 <br>
 <h3>Get all counts for a time period (inclusive)</h3>
 <p>url syntax: <code>/counts/first_date/last_date</code></p>
-<p>First date available: <code>2019-11-30</code>
 <br>
 <h3>Get counts for a location and time period (inclusive)</h3>
 <p>url syntax: <code>/counts/location/first_date/last_date</code></p>

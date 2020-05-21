@@ -32,6 +32,7 @@ def create_app(test_config=None):
     from . import df
     with app.app_context():
         df.get_df()
+        df.get_cameras_operation(df.get_df())
     
     '''
     # Import and register the blueprint auth from the factory

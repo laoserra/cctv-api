@@ -4,7 +4,7 @@ import json
 from flask import (
     Blueprint, render_template, url_for
 )
-from avenues.df import get_df
+from avenues.df import get_df, get_cameras_operation
 
 bp = Blueprint('counts', __name__)
 
@@ -13,14 +13,16 @@ bp = Blueprint('counts', __name__)
 #endpoint to the initial page of the api
 @bp.route('/')
 def index():
-    df = get_df()
-    locations = df.location.unique()
-    return render_template('index.html', locations=locations)
+    df = get_cameras_operation(get_df())
+    cam_list = [df.columns.values.tolist()] + df.values.tolist()
+
+    return render_template('index.html', locations=cam_list)
+
 
 # endpoint to get all data
 @bp.route('/counts/')
 def get_all_data():
-    all_data = get_df().head().to_dict('index')# delete head
+    all_data = get_df().to_dict('index')
     
     #default=str since timestp not serializable
     return json.dumps(all_data, default=str) 
@@ -32,7 +34,7 @@ def get_data_by_location(location):
     if location not in df['location'].unique():
         return 'Error: location does not exist'
     data_by_location = df[df['location']==location]
-    data_by_location = data_by_location.head().to_dict('index') # delete head
+    data_by_location = data_by_location.to_dict('index')
     
     return json.dumps(data_by_location, default=str) 
 
