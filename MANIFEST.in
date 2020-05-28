@@ -1,0 +1,2 @@
+graft avenues/templates
+global-exclude *.pyc
