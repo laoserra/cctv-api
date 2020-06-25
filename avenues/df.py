@@ -11,6 +11,14 @@ def clean_report(df):
     df['location'] = df['image'].str.split('_')
     df['location'] = df['location'].apply(lambda x: x[1])
     df = df.replace({
+        'A26': 'Broomielaw_@_Washington_St',
+        'A27': 'Clyde_walkway_@_McAlpine',
+        'A28': 'Broomielaw_@_James_Watt_St_(cam1)',
+        'A29': 'Broomielaw_@_James_Watt_St_(cam2)',
+        'A30': 'Broomielaw_Rear_of_Casino',
+        'A31': 'Clyde_Walkway_@_Dixon_St',
+        'A32': 'Clyde_Walkway_@_Jamaica_St',
+        'A33': 'Clyde_Walkway_@_Stockwell_St',
         'A03': 'Argyle_St_@_Oswald_St(static)',
         'A47': 'Argyle_St_@_Oswald_St',
         'A66': 'Sauchiehall_St_@_Pitt_St',

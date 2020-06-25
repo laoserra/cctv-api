@@ -9,7 +9,7 @@
 <br>
 <h3>Get all counts for all dates and all cameras</h3>
 <ul style="line-height:100%">
-	<li><a href="{{ url_for('counts.get_all_data') }}">/counts</a>
+	<li><a href="/cctv{{ url_for('counts.get_all_data') }}">/counts</a>
 	<li>response example:<code>{"0": {"timestp_UTC": "2019-11-30 04:30:01.428000", "location": "Argyle_St_@_Oswald_St(static)", "car": 2, "person": 0, "bicycle": 0, "motorcycle": 0, "bus": 0, "truck": 0}, "1": {"timestp_UTC": "2019-11-30 04:30:01.431000", "location": "Sauchiehall_St_@_Pitt_St", "car": 5, "person": 0, "bicycle": 0, "motorcycle": 0, "bus": 0, "truck": 0}}</code>
 </ul>
 <br>
